@@ -2,6 +2,8 @@
 
 AskBERT is a simple web app that uses a BERT model of your choice to answer questions based on a reference text. 
 
+![](https://github.com/alpayariyak/askBERT-app/blob/main/media/demo.gif)
+
 ## Installation
 
 To use AskBERT, you need to have Python 3 and pip installed on your system. Then, run the following command to install the required packages:
