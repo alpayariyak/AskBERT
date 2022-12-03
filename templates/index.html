@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AskBERT</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Add custom CSS styles -->
+    <style>
+    body {
+        padding: 20px;
+    }
+    #answer {
+        font-size: 1.2em;
+    }
+    #answer-text {
+        font-weight: normal;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>AskBERT</h1>
+        <p>If you can't seem to find the answer to a question, have BERT do it for you 🧠</p>
+        <!-- Form to input the question, reference text, and model name -->
+        <form id="form">
+            <div class="form-group">
+                <label for="question">Question:</label>
+                <input type="text" class="form-control" id="question" placeholder="Enter question">
+            </div>
+            <div class="form-group">
+                <label for="reference">Reference text:</label>
+                <textarea class="form-control" id="reference" placeholder="Enter reference text"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="model_name">Model Name on Hugging Face Platform:</label>
+                <input type="text" class="form-control" id="model_name" placeholder="Enter model name" value="bert-large-uncased-whole-word-masking-finetuned-squad">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <p></p>
+        </form>
+
+        <div id="answer" class="mt-3">
+    <div class="card">
+        <div class="card-header">
+            Answer
+        </div>
+        <div class="card-body">
+        <p id="answer-text" class="card-text"></p>
+    </div>
+</div>
+</div>
+        <!-- Add jQuery and Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <!-- Add Typed.js library -->
+        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+<script>
+    // Submit the form using AJAX
+$('#form').submit(function(event) {
+    // Prevent the form from being submitted
+    event.preventDefault(); // or use 'return false;'
+
+    $('#answer-text').empty();
+
+    // Get the values of the form fields
+    var question = $('#question').val();
+    var reference = $('#reference').val();
+    var model_name = $('#model_name').val();
+
+    // Make the AJAX request
+    $.ajax({
+        url: '/',
+        type: 'POST',
+        data: {
+            'question': question,
+            'reference': reference,
+            'model_name': model_name
+        },
+        success: function(response) {
+            // Get the answer from the response
+            var answer = response['answer'];
+
+            // After the loading animation is hidden, type the answer using Typed.js
+            setTimeout(function() {
+                var typed = new Typed('#answer-text', {
+                    strings: [answer],
+                    typeSpeed: 40,
+                    backSpeed: 20,
+                    showCursor: false
+                });
+            }, 1000);
+        }
+    });
+});
+</script>
+    </div>
+</body>
+</html>
+
